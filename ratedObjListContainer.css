@@ -1,0 +1,40 @@
+.ratedObjListContainer{
+    width: 75%;
+    display: flex;
+    padding: 0.5rem;
+    background-color: #C2843B;
+    border-radius: 0.5rem;
+    justify-content: space-around;
+}
+.ratedObjListContainer div{
+    display: block;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    width: 75%;
+}
+.ratedObjListContainer p{
+    padding: 1rem;
+    margin: 0;
+    background-color: #AAAAAA;
+    border: 3px solid #352E25;
+}
+.ratedObjListContainer button{
+    padding: 0.5rem;
+}
+
+.ratedObjListContainer img{
+    width: 100%;
+}
+
+#content > div{
+    border: black solid 1px;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+    #content{
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

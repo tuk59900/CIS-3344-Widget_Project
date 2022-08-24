@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="ratedObjListContainer.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <a href="http://cis-linux2.temple.edu:8080/fa21_3344_tuk59900/tutorial/index.html">Click here to go to the Tutorial's Index</a>
+        <div id="content" class="ratedObjListContainer">
+
+        </div>
+        <script src="MakeRatedObjList.js"></script>
+        <script>
+
+            var TableUtils = {};
+
+            TableUtils.makeText = function (text) {
+
+                var tableData = document.createElement('td');
+                text = text || "";
+                tableData.innerHTML = text;
+                tableData.style.textAlign = "left";
+
+                return tableData;
+            };
+
+            TableUtils.makeNumber = function (num) {
+
+                var tableData = document.createElement('td');
+                if (!num) {
+                    num = "";
+                } else {
+                    tmp = num + "";
+                    tmp = tmp.replace(" ", "");
+                }
+                tableData.innerHTML = num;
+                tableData.style.textAlign = "right";
+                return tableData;
+            };
+
+            TableUtils.makeDate = function (dateString) {
+                var tableData = document.createElement('td');
+                if (!dateString) { // empty data
+                    dateString = "";
+                } else { // check if it's a date
+
+                    var parsedDate = Date.parse(dateString);
+                    if (isNaN(dateString) && !isNaN(parsedDate)) {
+
+                        var years = 170;
+                        var days = years * 365;
+                        var hours = days * 24;
+                        var minutes = hours * 60;
+                        var seconds = minutes * 60;
+                    } else {
+                        dateString = "Not a Date " + dateString;
+                    }
+                }
+                tableData.innerHTML = dateString;
+                tableData.style.textAlign = "center";
+                return tableData;
+            };
+
+            TableUtils.makeImage = function (imageFileName, width) {
+
+                var tableData = document.createElement('td');
+                var img = document.createElement("img");
+                if (imageFileName && imageFileName !== "") {
+                    img.src = imageFileName;
+                }
+                img.style.width = width;
+
+                tableData.appendChild(img);
+                tableData.style.textAlign = "center";
+                return tableData;
+            };
+
+            var bookList = [
+                {
+                    "bookId": "0",
+
+                    "bookTitle": "The Great Book",
+                    "bookISBN": "0-1111-2222-3",
+                    "bookCover": "http://cis-linux2.temple.edu:8080/fa21_3344_tuk59900/pics/book1.png",
+
+                    "bookDate": "11/22/2017",
+                    "bookPublisher": "GoodPrints",
+
+                    "bookScore": "4.1",
+
+                    "webUserId": "349",
+                    "userRoleId": "1"
+                },
+                {
+                    "bookId": "1",
+
+                    "bookTitle": "A Love Story",
+                    "bookISBN": "0-1111-5555-3",
+                    "bookCover": "http://cis-linux2.temple.edu:8080/fa21_3344_tuk59900/pics/book3.png",
+
+                    "bookDate": "01/02/2007",
+                    "bookPublisher": "Paley Books",
+
+                    "bookScore": "4.5",
+
+                    "webUserId": "3",
+                    "userRoleId": "1"
+                },
+                {
+                    "bookId": "2",
+
+                    "bookTitle": "Writing Tips and Tricks",
+                    "bookISBN": "0-3333-4444-5",
+                    "bookCover": "http://cis-linux2.temple.edu:8080/fa21_3344_tuk59900/pics/book2.png",
+
+                    "bookDate": "07/07/2004",
+                    "bookPublisher": "GreatBooks",
+
+                    "bookScore": "3.5",
+
+                    "webUserId": "3",
+                    "userRoleId": "3"
+                },
+                {
+                    "bookId": "3",
+
+                    "bookTitle": "Python Practice Problems",
+                    "bookISBN": "0-5555-6666-7",
+                    "bookCover": "http://cis-linux2.temple.edu:8080/fa21_3344_tuk59900/pics/book5.png",
+
+                    "bookDate": "01/09/2018",
+                    "bookPublisher": "FinePress",
+
+                    "bookScore": "2.5",
+
+                    "webUserId": "351",
+                    "userRoleId": "1"
+                },
+                {
+                    "bookId": "4",
+
+                    "bookTitle": "Healthy Meals",
+                    "bookISBN": "0-7777-8888-9",
+                    "bookCover": "http://cis-linux2.temple.edu:8080/fa21_3344_tuk59900/pics/book4.png",
+
+                    "bookDate": "05/03/2011",
+                    "bookPublisher": "GreatBooks",
+
+                    "bookScore": "1.5",
+
+                    "webUserId": "228",
+                    "userRoleId": "3"
+                },
+                {
+                    "bookTitle": "Empty Book Object"
+                }
+            ];
+
+            function processBookData(bookList) {
+
+                var newBookList = [];
+                var theScoreList = [];
+
+                for (var i = 0; i < bookList.length; i++) {
+
+                    newBookList[i] = {};
+                    newBookList[i].Title = TableUtils.makeText(bookList[i].bookTitle);
+                    newBookList[i].BookScore = TableUtils.makeText(bookList[i].bookScore) || null;
+                    newBookList[i].BookCover = TableUtils.makeImage(bookList[i].bookCover) || null;
+                    newBookList[i].AuthorId = TableUtils.makeNumber(bookList[i].webUserId) || null;
+                    newBookList[i].AuthorRole = TableUtils.makeNumber(bookList[i].userRoleId || null);
+                    newBookList[i].BookDate = TableUtils.makeDate(bookList[i].bookDate) || null;
+                    theScoreList[i] = newBookList[i].BookScore;
+
+                }
+
+                var ss1 = MakeRatedObjList(
+                        {
+                            title: "Some Rated Books",
+                            objList: newBookList,
+                            theScore: theScoreList,
+                            theScoreThreshold: 5,
+                            theAmountToShow: 3
+                        }
+                );
+
+                document.getElementById('content').appendChild(ss1);
+            }
+            processBookData(bookList);
+
+            var penList = [
+                {
+                    "penName": "Amazing Pen",
+                    "penManufacturer": "Presser Pens",
+                    "penImage": "https://icons.iconarchive.com/icons/iconleak/cerulean/256/pen-edit-icon.png",
+                    "penScore": "100"
+                },
+                {
+                    "penName": "Okay Pen",
+                    "penManufacturer": "Charles Ink",
+                    "penImage": "https://iconarchive.com/download/i8004/hopstarter/soft-scraps/Pen-Red.ico",
+                    "penScore": "50"
+                },
+                {
+                    "penName": "Terrible Pen",
+                    "penManufacturer": "Paley Writing",
+                    "penImage": "http://www.i2clipart.com/cliparts/f/1/d/a/clipart-pencil-256x256-f1da.png",
+                    "penScore": "0"
+                },
+                {
+                    "penName": "Empty Pen Object"
+                }
+            ];
+
+            processPenData(penList);
+            function processPenData(penData) {
+                var newPenList = [];
+                var thePenList = [];
+                for (var i = 0; i < penList.length; i++) {
+                    newPenList[i] = {};
+                    newPenList[i].Name = TableUtils.makeText(penList[i].penName);
+                    newPenList[i].Quality = TableUtils.makeNumber(penList[i].penScore) || null;
+                    newPenList[i].Make = TableUtils.makeText(penList[i].penManufacturer) || null;
+                    newPenList[i].Image = TableUtils.makeImage(penList[i].penImage) || null;
+                    thePenList[i] = newPenList[i].Quality;
+                }
+
+                var ss2 = MakeRatedObjList({
+                    title: "Some Rated Pens",
+                    objList: newPenList,
+                    theScore: thePenList,
+                    theScoreThreshold: 100,
+                    theAmountToShow: 2
+                });
+
+                document.getElementById('content').appendChild(ss2);
+            }
+
+        </script>
+    </body>
+</html>
